@@ -19,8 +19,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const path = core.getInput('path');
+            import fs from 'fs';
 
+            const path = core.getInput('path');
             core.debug(`Load package.json at ${path}`);
 
             const packageJson = fs.readFileSync(join(path, 'package.json')).toString()
