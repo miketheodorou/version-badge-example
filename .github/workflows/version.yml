@@ -1,0 +1,30 @@
+name: Build and Deploy Prod
+
+on:
+  push:
+    branches: ["main", "beta", "develop"]
+
+jobs:
+  package_version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+
+      - name: Get package.json version
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const path = core.getInput('path');
+
+            core.debug(`Load package.json at ${path}`);
+
+            const packageJson = fs.readFileSync(join(path, 'package.json')).toString()
+            const version = JSON.parse(packageJson).version
+
+            core.debug(`set version: version: ${version}`);
+            core.setOutput('version', version);
