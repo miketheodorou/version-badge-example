@@ -1,3 +1,5 @@
 # Version Badge Example
 
-![example workflow](https://github.com/miketheodorou/version-badge-example/actions/workflows/version.yml/badge.svg)
+![Develop Version](https://raw.githubusercontent.com/miketheodorou/version-badge-example/develop/badges/develop-version.svg)
+![Beta Version](https://raw.githubusercontent.com/miketheodorou/version-badge-example/develop/badges/beta-version.svg)
+![Prod Version](https://raw.githubusercontent.com/miketheodorou/version-badge-example/develop/badges/prod-version.svg)
