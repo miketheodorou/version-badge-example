@@ -20,11 +20,13 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            const path = require('path')
+            const { join } = path;
 
-            const path = core.getInput('path');
-            core.debug(`Load package.json at ${path}`);
+            const corePath = core.getInput('path');
+            core.debug(`Load package.json at ${corePath}`);
 
-            const packageJson = fs.readFileSync(join(path, 'package.json')).toString()
+            const packageJson = fs.readFileSync(join(corePath, 'package.json')).toString()
             const version = JSON.parse(packageJson).version
 
             core.debug(`set version: version: ${version}`);
