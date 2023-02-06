@@ -48,9 +48,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { generateBadge } = await import('${{ github.workspace }}/ci/badge.js')
-            const branch = '${{ github.GITHUB_REF_NAME }}'
-            const version = '${{ steps.package-version.outputs.version }}'
+            const { generateBadge } = await import('${{ github.workspace }}/ci/badge.js');
+            const branch = '$GITHUB_REF_NAME';
+            const version = '${{ steps.package-version.outputs.version }}';
 
             await generateBadge(branch, version);
 
