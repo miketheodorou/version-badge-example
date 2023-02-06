@@ -49,7 +49,7 @@ jobs:
         with:
           script: |
             const { generateBadge } = await import('${{ github.workspace }}/ci/badge.js');
-            const branch = '$GITHUB_REF_NAME';
+            const branch = $GITHUB_REF_NAME;
             const version = '${{ steps.package-version.outputs.version }}';
 
             await generateBadge(branch, version);
