@@ -20,18 +20,12 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
 
-      - name: Install Dependencies
-        run: yarn install
-
-      - name: Install dependencies
-        uses: actions/setup-node@v3
-
       - name: Get package.json version
         id: package-version
         uses: actions/github-script@v6
         with:
           script: |
-            const { getPackageVersion } = await import('${{ github.workspace }}/version.js')
+            const { getPackageVersion } = await import('${{ github.workspace }}/ci/version.js')
 
             const path = core.getInput('path');
             core.debug(`Load package.json at ${path}`);
@@ -46,11 +40,14 @@ jobs:
         with:
           ref: badges
 
+      - name: Install Dependencies
+        run: yarn install
+
       - name: Generate Badge
         uses: actions/github-script@v6
         with:
           script: |
-            const { generateBadge } = await import('${{ github.workspace }}/version.js')
+            const { generateBadge } = await import('${{ github.workspace }}/ci/badge.js')
             const branch = '${{ github.GITHUB_REF_NAME }}'
             const version = '${{ steps.package-version.outputs.version }}'
 
