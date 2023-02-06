@@ -1,6 +1,8 @@
 
 import fs from 'fs';
 import { join } from 'path'
+import fetch from 'node-fetch';
+
 
 export function getPackageVersion(path) {
   const packageJson = fs.readFileSync(join(path, 'package.json')).toString();

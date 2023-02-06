@@ -16,8 +16,15 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
-        with:
-          node-version: 18.12.1
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Install dependencies
+        uses: actions/setup-node@v3
 
       - name: Get package.json version
         id: package-version
