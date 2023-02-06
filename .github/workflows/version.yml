@@ -11,17 +11,19 @@ jobs:
     steps:
       - name: Checkout Branch
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.GITHUB_REF_NAME }}
 
       - name: Setup Node
         uses: actions/setup-node@v3
 
       - name: Get package.json version
+        id: package-version
         uses: actions/github-script@v6
         with:
           script: |
-            const fs = require('fs');
-            const path = require('path')
-            const { join } = path;
+            import fs from 'fs';
+            import { join } = from 'path'
 
             const corePath = core.getInput('path');
             core.debug(`Load package.json at ${corePath}`);
@@ -31,3 +33,26 @@ jobs:
 
             core.debug(`set version: version: ${version}`);
             core.setOutput('version', version);
+
+      - name: Checkout Badges Branch
+        uses: actions/checkout@v3
+        with:
+          ref: badges
+
+      - name: Generate Badge
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { generateBadge } = await import('${{ github.workspace }}/version.js')
+            const branch = '${{ github.GITHUB_REF_NAME }}'
+            const version = '${{ steps.package-version.outputs.version }}'
+
+            await generateBadge(branch, version);
+
+      - name: Commit badge
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generates new version badge"
+          git push

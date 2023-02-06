@@ -1,9 +1,8 @@
 
 import fs from 'fs';
 
-
-function generateBadge(branch, version) {
-  fetch(`https://img.shields.io/badge/${branch}-${version}-blue.svg`)
+export function generateBadge(branch, version) {
+  return fetch(`https://img.shields.io/badge/${branch}-${version}-blue.svg`)
     .then((res) => res.text())
     .then((svg) => {
       fs.writeFileSync(`badges/${branch}-version.svg`, svg);
@@ -11,6 +10,4 @@ function generateBadge(branch, version) {
     })
     .catch(console.error);
 }
-
-generateBadge('develop', '1.0.0');
 
