@@ -58,6 +58,4 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
-          git commit -m "generates new version badge"
-          git push
+          git diff --quiet && git diff --staged --quiet || git commit -am 'generates new version badge' && git push
