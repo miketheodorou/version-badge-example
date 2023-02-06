@@ -16,20 +16,20 @@ jobs:
 
       - name: Setup Node
         uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
       - name: Get package.json version
         id: package-version
         uses: actions/github-script@v6
         with:
           script: |
-            import fs from 'fs';
-            import { join } = from 'path'
+            const { getPackageVersion } = await import('${{ github.workspace }}/version.js')
 
-            const corePath = core.getInput('path');
-            core.debug(`Load package.json at ${corePath}`);
+            const path = core.getInput('path');
+            core.debug(`Load package.json at ${path}`);
 
-            const packageJson = fs.readFileSync(join(corePath, 'package.json')).toString()
-            const version = JSON.parse(packageJson).version
+            const version = getPackageVersion(path)
 
             core.debug(`set version: version: ${version}`);
             core.setOutput('version', version);
